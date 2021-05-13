@@ -1,0 +1,16 @@
+<h3>Add Department</h3>
+
+<div>
+    <input type="text" [(ngModel)]="department">
+</div>
+
+<div>
+    <button (click)="addDepartment()">Add Department</button>
+</div>
+
+<a [routerLink]="['/employee']" routerLinkActive="router-link-active">Go to add employees</a>
+
+<hr>
+<ol>
+    <li *ngFor="let department of departments">{{department}}</li>
+</ol>
