@@ -1,43 +1,113 @@
-<div>
-    <h3> Add Employee information</h3>
-    <div>
-        Name : <input mat-input type="text" [(ngModel)]="employee.name">
-    </div>
-    <div>
-        Type of employee :
-        <select [(ngModel)]="employee.type">
-            <option value="">Select</option>
-            <option value="employee">Employee</option>
-            <option value="manager">Manager</option>
-        </select>
-    </div>
-    <div>
-        Department :
-        <select [(ngModel)]="employee.department">
-            <option value="">Select</option>
-            <option *ngFor="let department of departments">{{department}}</option>
-        </select>
+<div class="page">
+    <mat-card class="parent-card">
+        <mat-card-header>
+            <mat-card-title>Employee form</mat-card-title>
+            <mat-card-subtitle>add employee details</mat-card-subtitle>
+        </mat-card-header>
+        <div>
+            <mat-form-field class="full-width">
+                <mat-label>Add employee name</mat-label>
+                <input matInput type="text" [(ngModel)]="employee.name" placeholder="First and last name">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Type of employee</mat-label>
+                <mat-select [(ngModel)]="employee.type">
+                    <mat-option value="employee">Employee</mat-option>
+                    <mat-option value="manager">Manager</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-    </div>
-    <div>
-        Reporting Manager :
-        <select [(ngModel)]="employee.reportingManager">
-            <option value="">Select</option>
-            <option *ngFor="let manager of managers">{{manager.name}}</option>
-        </select>
-    </div>
-    <button (click)="SaveEmployeeInfotmation()">Save</button>
+        </div>
+        <div>
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Department</mat-label>
+                <mat-select [(ngModel)]="employee.department">
+                    <mat-option *ngFor="let dept of departments" value="dept">{{dept}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field class="full-width" appearance="fill">
+                <mat-label>Reporting Manager</mat-label>
+                <mat-select [(ngModel)]="employee.reportingManager">
+                    <mat-option *ngFor="let mgr of managers" value="{{mgr.name}}">{{mgr.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>        
+        <mat-card-actions>
+            <button mat-button (click)="SaveEmployeeInfotmation()">Add Department</button>
+            <button mat-button [routerLink]="['/organization']" routerLinkActive="router-link-active">Go to
+                department</button>
+        </mat-card-actions>
+    </mat-card>
 </div>
+<mat-grid-list cols="2" rowHeight="2:1" gutterSize="5">
+    <mat-grid-tile>
+        <div class="table-container mat-elevation-z8">
+            <h4 class="center">Employees</h4> 
+            <table mat-table [dataSource]="employees">
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
 
 
-<hr>
-<h3>All Employees</h3>
-<ol>
-    <li *ngFor="let employee of employees">{{employee.name}}, Type: {{employee.type}}, Manager: {{employee.reportingManager}}</li>
-</ol>
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                </ng-container>
 
-<hr>
-<h3>All Managers</h3>
-<ol>
-    <li *ngFor="let manager of managers">{{manager.name}}, Type: {{manager.type}}, Manager: {{manager.reportingManager}}</li>
-</ol>
+
+                <ng-container matColumnDef="department">
+                    <th mat-header-cell *matHeaderCellDef> Department </th>
+                    <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="reportingManager">
+                    <th mat-header-cell *matHeaderCellDef> Reporting Manager </th>
+                    <td mat-cell *matCellDef="let element"> {{element.reportingManager}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <div class="table-container mat-elevation-z8">
+            <h4 class="center">Managers</h4> 
+            <table mat-table [dataSource]="managers">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="department">
+                    <th mat-header-cell *matHeaderCellDef> Department </th>
+                    <td mat-cell *matCellDef="let element"> {{element.department}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="reportingManager">
+                    <th mat-header-cell *matHeaderCellDef> Reporting Manger </th>
+                    <td mat-cell *matCellDef="let element"> {{element.reportingManager}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>

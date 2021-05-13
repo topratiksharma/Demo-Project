@@ -6,17 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent implements OnInit {
-
-  public employee: Employee = {
-    name: '',
-    type: '',
-    department: '',
-    reportingManager: ''
-  };
-
-  public managers = [];
-  public employees = JSON.parse(localStorage.getItem('Employees')) || [];
+  
   public departments = JSON.parse(localStorage.getItem('Department')) || [];
+  public displayedColumns = ["name", "type", "department", "reportingManager"];
+  public employee: Employee = { name: '', type: '', department: '', reportingManager: '' };
+  public employees = JSON.parse(localStorage.getItem('Employees')) || [];
+  public managers = [];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -27,16 +23,9 @@ export class EmployeeComponent implements OnInit {
     if (this.validateEmployeeInformation()) {
       this.employees.push(this.employee);
       localStorage.setItem('Employees', JSON.stringify(this.employees));
+      this.refreshList();      
     }
-
-    console.log('Saved Infomation', this.employee);
-    
-    this.employee = {
-      name: '',
-      type: '',
-      department: '',
-      reportingManager: ''
-    }
+    this.clearForm();
   }
 
   private validateEmployeeInformation(): boolean {
@@ -52,6 +41,15 @@ export class EmployeeComponent implements OnInit {
       // check if all fiels are selected else reject it
     }
     return false;
+  }
+
+  private refreshList() {
+    this.employees = JSON.parse(localStorage.getItem('Employees'));
+    this.managers = this.employees.filter(emp => emp.type === 'manager');
+  }
+
+  private clearForm() {
+    this.employee = { name: '', type: '', department: '', reportingManager: '' };
   }
 }
 

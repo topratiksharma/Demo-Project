@@ -1,9 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EmployeeComponent } from './employee.component';
 import { EmployeeRoutingModule } from './employee-route.module';
-import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { NgModule } from '@angular/core';
+
 
 @NgModule({
   declarations: [
@@ -13,7 +20,13 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     EmployeeRoutingModule,
-    MatInputModule
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatTableModule,
+    MatGridListModule
   ]
 })
 export class EmployeeModule { }
