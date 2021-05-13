@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Department } from './organization.models';
 
 @Component({
   selector: 'app-organization',
@@ -8,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class OrganizationComponent implements OnInit {
 
-  public departments: string[] = JSON.parse(localStorage.getItem('Department')) || [];
+  public departments: Department[] = JSON.parse(localStorage.getItem('Department')) || [];
   public department: string;
 
   constructor(private _snackBar: MatSnackBar) { }
@@ -18,7 +19,7 @@ export class OrganizationComponent implements OnInit {
 
   public addDepartment(): void {
     if (this.validateDepartment()) {
-      this.departments.push(this.department);
+      this.departments.push({ name: this.department, manager: '' });
       localStorage.setItem('Department', JSON.stringify(this.departments));
       this.department = '';
     }
@@ -27,7 +28,7 @@ export class OrganizationComponent implements OnInit {
   private validateDepartment(): boolean {
     if (this.department) {//check if empty
       // check if duplicate
-      if (this.departments.includes(this.department)) {
+      if (this.departments.filter(x => x.name === this.department)[0]) {
         this.notification("Duplicate name", "Choose a unique name");
         return false;
       }
